@@ -1,34 +1,7 @@
-//
-//  ContentView.swift
-//  TravelSchedule
-//
-//  Created by gregory maier on 10/22/25.
-//
-
-import SwiftUI
+import Foundation
 import OpenAPIURLSession
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-        .onAppear {
-            testNearestStations()
-            testScheduleBetweenStations()
-            testStationSchedule()
-            testRouteStations()
-            testNearestCity()
-            testCarrierInfo()
-            testAllStations()
-            testCopyright()
-        }
-    }
-
+class APIManager {
     func testNearestStations() {
         Task {
             do {
@@ -61,7 +34,7 @@ struct ContentView: View {
             }
         }
     }
-    
+
     func testScheduleBetweenStations() {
         Task {
             do {
@@ -87,7 +60,7 @@ struct ContentView: View {
             }
         }
     }
-    
+
     func testStationSchedule() {
         Task {
             do {
@@ -112,7 +85,7 @@ struct ContentView: View {
             }
         }
     }
-    
+
     func testRouteStations() {
         Task {
             do {
@@ -137,7 +110,7 @@ struct ContentView: View {
             }
         }
     }
-    
+
     func testNearestCity() {
         Task {
             do {
@@ -162,7 +135,7 @@ struct ContentView: View {
             }
         }
     }
-    
+
     func testCarrierInfo() {
         Task {
             do {
@@ -184,7 +157,7 @@ struct ContentView: View {
             }
         }
     }
-    
+
     func testAllStations() {
         Task {
             do {
@@ -206,7 +179,7 @@ struct ContentView: View {
             }
         }
     }
-    
+
     func testCopyright() {
         Task {
             do {
@@ -228,9 +201,6 @@ struct ContentView: View {
             }
         }
     }
-}
 
-#Preview {
-    ContentView()
 }
 
