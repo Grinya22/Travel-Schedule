@@ -65,8 +65,6 @@ struct CitySelectView: View {
                     }
                 }
             }
-            
-            
         }
         .navigationTitle("Выбор города")
         .navigationBarTitleDisplayMode(.inline)

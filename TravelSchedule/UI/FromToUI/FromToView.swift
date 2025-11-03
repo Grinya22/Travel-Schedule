@@ -7,6 +7,22 @@ struct FromToView: View {
     @State private var toStation = ""
     @State private var path: [String] = []
     
+    var fromRoute: String {
+        if fromStation.isEmpty {
+            return fromCity
+        } else {
+            return "\(fromCity) (\(fromStation))"
+        }
+    }
+
+    var toRoute: String {
+        if toStation.isEmpty {
+            return toCity
+        } else {
+            return "\(toCity) (\(toStation))"
+        }
+    }
+    
     var body: some View {
         NavigationStack(path: $path) {
             VStack {
@@ -21,7 +37,7 @@ struct FromToView: View {
                 HStack {
                     VStack(spacing: 0) {
                         HStack {
-                            Text(fromCity.isEmpty ? "Откуда" : "\(fromCity)\(fromStation.isEmpty ? "" : " (\(fromStation))")")
+                            Text(fromCity.isEmpty ? "Откуда" : fromRoute)
                                 .foregroundStyle(fromCity.isEmpty ? .secondary : .primary)
                             Spacer()
                         }
@@ -31,7 +47,7 @@ struct FromToView: View {
                             path.append("CitySelectFrom")
                         }
                         HStack {
-                            Text(toCity.isEmpty ? "Куда" : "\(toCity)\(toStation.isEmpty ? "" : " (\(toStation))")")
+                            Text(toCity.isEmpty ? "Куда" : toRoute)
                                 .foregroundStyle(toCity.isEmpty ? .secondary : .primary)
                             Spacer()
                         }
@@ -60,7 +76,7 @@ struct FromToView: View {
                         .font(.system(size: 17, weight: .semibold))
                         .foregroundColor(.whiteUniversal)
                         .padding(.vertical, 20)
-                        .padding(.horizontal, 50)
+                        .padding(.horizontal, 60)
                         .background(Color.blueUniversal)
                         .cornerRadius(16)
                 }
@@ -93,6 +109,12 @@ struct FromToView: View {
                         selectedStation: $toStation,
                         path: $path
                     )
+                case "ListOfCarriersView":
+                    ListOfCarriersView(
+                        fromRoute: fromRoute,
+                        toRoute: toRoute,
+                        path: $path
+                    )
                 default:
                     EmptyView()
                 }
@@ -106,7 +128,7 @@ struct FromToView: View {
     }
     
     private func find() {
-        
+        path.append("ListOfCarriersView")
     }
 }
 

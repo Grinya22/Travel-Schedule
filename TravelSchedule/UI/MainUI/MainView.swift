@@ -16,7 +16,6 @@ struct MainView: View {
                 }
         }
         
-        
         .onAppear {
 //            api.testNearestStations()
 //            api.testScheduleBetweenStations()
@@ -28,8 +27,6 @@ struct MainView: View {
 //            api.testCopyright()
         }
     }
-    
-    
 }
 
 #Preview {
