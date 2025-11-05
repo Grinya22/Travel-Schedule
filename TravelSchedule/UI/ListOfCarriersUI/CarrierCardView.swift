@@ -62,7 +62,7 @@ struct CarrierCardView: View {
         .padding(20)
         .background(.lightGray)
         .cornerRadius(24)
-        .padding(.horizontal, 16)
+        
     }
 }
 

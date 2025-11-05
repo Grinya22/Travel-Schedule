@@ -1,9 +1,9 @@
 import SwiftUI
 
 struct StationSelectView: View {
-    let selectedCity: String
-    @Binding var selectedStation: String
     @Binding var path: [String]
+    @Binding var selectedStation: String
+    let selectedCity: String
     @State private var searchText = ""
     
     private let stations = [
@@ -71,6 +71,6 @@ struct StationSelectView: View {
 
 #Preview {
     NavigationStack {
-        StationSelectView(selectedCity: "", selectedStation: .constant(""), path: .constant([]))
+        StationSelectView(path: .constant([]), selectedStation: .constant(""), selectedCity: "")
     }
 }

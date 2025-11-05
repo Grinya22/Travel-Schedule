@@ -1,11 +1,13 @@
 import SwiftUI
 
 struct FromToView: View {
+    @State private var path: [String] = []
     @State private var fromCity = ""
     @State private var fromStation = ""
     @State private var toCity = ""
     @State private var toStation = ""
-    @State private var path: [String] = []
+    @State private var selectedTimes: Set<String> = []
+    @State private var showTransfers: String? = nil
     
     var fromRoute: String {
         if fromStation.isEmpty {
@@ -77,7 +79,7 @@ struct FromToView: View {
                         .foregroundColor(.whiteUniversal)
                         .padding(.vertical, 20)
                         .padding(.horizontal, 60)
-                        .background(Color.blueUniversal)
+                        .background(.blueUniversal)
                         .cornerRadius(16)
                 }
                 
@@ -87,33 +89,41 @@ struct FromToView: View {
                 switch screen {
                 case "CitySelectFrom":
                     CitySelectView(
-                        selectedCity: $fromCity,
                         path: $path,
+                        selectedCity: $fromCity,
                         nextScreen: "StationSelectFrom"
                     )
                 case "CitySelectTo":
                     CitySelectView(
-                        selectedCity: $toCity,
                         path: $path,
+                        selectedCity: $toCity,
                         nextScreen: "StationSelectTo"
                     )
                 case "StationSelectFrom":
                     StationSelectView(
-                        selectedCity: fromCity,
+                        path: $path,
                         selectedStation: $fromStation,
-                        path: $path
+                        selectedCity: fromCity
                     )
                 case "StationSelectTo":
                     StationSelectView(
-                        selectedCity: toCity,
+                        path: $path,
                         selectedStation: $toStation,
-                        path: $path
+                        selectedCity: toCity
                     )
                 case "ListOfCarriersView":
                     ListOfCarriersView(
+                        path: $path,
+                        selectedTimes: $selectedTimes,
+                        showTransfers: $showTransfers,
                         fromRoute: fromRoute,
-                        toRoute: toRoute,
-                        path: $path
+                        toRoute: toRoute
+                    )
+                case "FiltrationView":
+                    FiltrationView(
+                        path: $path,
+                        selectedTimes: $selectedTimes,
+                        showTransfers: $showTransfers
                     )
                 default:
                     EmptyView()

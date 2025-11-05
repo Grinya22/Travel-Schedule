@@ -3,6 +3,7 @@ import SwiftUI
 struct StoryCardView: View {
     let imageName: String
     @State private var isSelected = false
+    
     var body: some View {
         ZStack(alignment: .bottomLeading) {
             Image(imageName)

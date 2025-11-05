@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct CitySelectView: View {
-    @Binding var selectedCity: String
     @Binding var path: [String]
+    @Binding var selectedCity: String
     var nextScreen: String
     @State private var searchText = ""
     
@@ -73,6 +73,6 @@ struct CitySelectView: View {
 
 #Preview {
     NavigationStack {
-        CitySelectView(selectedCity: .constant(""), path: .constant([]), nextScreen: "")
+        CitySelectView(path: .constant([]), selectedCity: .constant(""), nextScreen: "")
     }
 }
