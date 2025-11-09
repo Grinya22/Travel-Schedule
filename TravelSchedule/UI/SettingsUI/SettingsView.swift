@@ -13,10 +13,10 @@ struct SettingsView: View {
                 } label: {
                     HStack {
                         Text("Пользовательское соглашение")
-                            .foregroundStyle(.black)
+                            .foregroundStyle(.blackDay)
                         Spacer()
                         Image(systemName: "chevron.right")
-                            .foregroundStyle(.black)
+                            .foregroundStyle(.blackDay)
                     }
                     .padding()
                 }
@@ -25,7 +25,9 @@ struct SettingsView: View {
                     .font(.system(size: 12, weight: .regular))
                     .lineLimit(2)
                     .multilineTextAlignment(.center)
+                    .padding()
             }
+            .background(.whiteDay)
         }
         .preferredColorScheme(isDarkMode ? .dark : .light)
     }

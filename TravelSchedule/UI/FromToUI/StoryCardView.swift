@@ -15,11 +15,13 @@ struct StoryCardView: View {
                 
             VStack(alignment: .leading) {
                 Text("Text Text")
+                    .foregroundStyle(.whiteUniversal)
                 Text("Text Text")
+                    .foregroundStyle(.whiteUniversal)
                 Text("Text Text")
+                    .foregroundStyle(.whiteUniversal)
             }
             .font(.system(size: 12, weight: .regular))
-            .foregroundColor(.whiteDay)
             .padding(.leading, 8)
             .padding(.bottom, 12)
         }

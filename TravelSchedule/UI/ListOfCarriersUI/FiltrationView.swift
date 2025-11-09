@@ -19,77 +19,80 @@ struct FiltrationView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 35) {
-            Text("Время отправления")
-                .font(.system(size: 24, weight: .bold))
-                .multilineTextAlignment(.leading)
-            
-            ForEach(timeOptions, id: \.self) { option in
-                HStack {
-                    Text(option)
-                        .font(.system(size: 17))
-                    Spacer()
-                    
-                    if !selectedTimes.contains(option) {
-                        RoundedRectangle(cornerRadius: 4)
-                            .stroke(.blackUniversal, lineWidth: 2)
-                            .frame(width: 20, height: 20)
-                    } else {
-                        ZStack {
+            VStack(alignment: .leading, spacing: 35) {
+                Text("Время отправления")
+                    .font(.system(size: 24, weight: .bold))
+                    .multilineTextAlignment(.leading)
+                ForEach(timeOptions, id: \.self) { option in
+                    HStack {
+                        Text(option)
+                            .font(.system(size: 17))
+                        Spacer()
+                        if !selectedTimes.contains(option) {
                             RoundedRectangle(cornerRadius: 4)
-                                .fill(.blackUniversal)
+                                .stroke(.blackDay, lineWidth: 2)
                                 .frame(width: 20, height: 20)
-                            Image(systemName: "checkmark")
-                                .font(.system(size: 12, weight: .bold))
-                                .foregroundColor(.whiteUniversal)
+                        } else {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 4)
+                                    .fill(.blackDay)
+                                    .frame(width: 20, height: 20)
+                                Image(systemName: "checkmark")
+                                    .font(.system(size: 12, weight: .bold))
+                                    .foregroundColor(.whiteDay)
+                            }
                         }
                     }
-                }
-                .onTapGesture {
-                    toggleTime(option)
-                }
-            }
-            
-            Text("Показывать варианты с пересадками")
-                .font(.system(size: 24, weight: .bold))
-                .multilineTextAlignment(.leading)
-            
-            ForEach(yesNoOptions, id: \.self) { option in
-                HStack {
-                    Text(option)
-                        .font(.system(size: 17))
-                    Spacer()
-                    
-                    if showTransfers != option {
-                        Circle()
-                            .stroke(.blackUniversal, lineWidth: 2)
-                            .frame(width: 20, height: 20)
-                    } else {
-                        ZStack {
-                            Circle()
-                                .stroke(.blackUniversal, lineWidth: 2)
-                                .frame(width: 20, height: 20)
-                            Circle()
-                                .fill(.blackUniversal)
-                                .frame(width: 10, height: 10)
-                        }
+                    .onTapGesture {
+                        toggleTime(option)
                     }
                 }
-                .onTapGesture {
-                    toggleYesNo(option)
-                }
             }
-        }
-        .padding(.horizontal, 16)
-        Spacer()
-        Button("Применить", action: apply)
-            .font(.system(size: 17, weight: .bold))
-            .foregroundColor(.whiteUniversal)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 20)
-            .background(.blueUniversal)
-            .cornerRadius(16)
             .padding(.horizontal, 16)
+            
+            VStack(alignment: .leading, spacing: 35) {
+                Text("Показывать варианты с пересадками")
+                    .font(.system(size: 24, weight: .bold))
+                    .multilineTextAlignment(.leading)
+                ForEach(yesNoOptions, id: \.self) { option in
+                    HStack {
+                        Text(option)
+                            .font(.system(size: 17))
+                        Spacer()
+                        if showTransfers != option {
+                            Circle()
+                                .stroke(.blackDay, lineWidth: 2)
+                                .frame(width: 20, height: 20)
+                        } else {
+                            ZStack {
+                                Circle()
+                                    .stroke(.blackDay, lineWidth: 2)
+                                    .frame(width: 20, height: 20)
+                                Circle()
+                                    .fill(.blackDay)
+                                    .frame(width: 10, height: 10)
+                            }
+                        }
+                    }
+                    .onTapGesture {
+                        toggleYesNo(option)
+                    }
+                }
+            }
+            .padding(.horizontal, 16)
+            Spacer()
+            Button("Применить", action: apply)
+                .font(.system(size: 17, weight: .bold))
+                .foregroundColor(.whiteUniversal)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 20)
+                .background(.blueUniversal)
+                .cornerRadius(16)
+                .padding(.horizontal, 16)
+        }
+        .background(.whiteDay)
     }
+    
     func apply() {
         path.removeLast()
     }

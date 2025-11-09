@@ -3,6 +3,16 @@
     {
       "filename" : "Settings.pdf",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "Vector.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

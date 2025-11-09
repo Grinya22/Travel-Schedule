@@ -5,6 +5,7 @@ struct CitySelectView: View {
     @Binding var selectedCity: String
     var nextScreen: String
     @State private var searchText = ""
+    @Environment(\.colorScheme) var colorScheme
     
     private let cities = [
         "Москва",
@@ -28,12 +29,14 @@ struct CitySelectView: View {
         VStack {
             Label {
                 TextField("Поиск", text: $searchText)
+                    .foregroundStyle(.blackDay)
+                    .tint(.blackDay)
             } icon: {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.grayUniversal)
             }
             .padding(8)
-            .background(.lightGray)
+            .background(colorScheme == .dark ? .lightGray.opacity(0.24) : .lightGray)
             .cornerRadius(10)
             .padding(.horizontal)
             
@@ -42,6 +45,7 @@ struct CitySelectView: View {
                 Text("Город не найден")
                     .font(.system(size: 24, weight: .bold))
                     .multilineTextAlignment(.center)
+                    .foregroundStyle(.blackDay)
                 Spacer()
             } else {
                 ScrollView {
@@ -53,10 +57,10 @@ struct CitySelectView: View {
                             } label: {
                                 HStack {
                                     Text(city)
-                                        .foregroundStyle(.blackUniversal)
+                                        .foregroundStyle(.blackDay)
                                     Spacer()
                                     Image(systemName: "chevron.right")
-                                        .foregroundStyle(.blackUniversal)
+                                        .foregroundStyle(.blackDay)
                                 }
                                 .padding()
                             }
@@ -68,6 +72,7 @@ struct CitySelectView: View {
         }
         .navigationTitle("Выбор города")
         .navigationBarTitleDisplayMode(.inline)
+        .background(.whiteDay)
     }
 }
 

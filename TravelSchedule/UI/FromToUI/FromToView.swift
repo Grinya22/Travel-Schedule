@@ -9,6 +9,9 @@ struct FromToView: View {
     @State private var selectedTimes: Set<String> = []
     @State private var showTransfers: String? = nil
     
+    @State private var isServerError = false
+    @State private var isOffline = false
+    
     var fromRoute: String {
         if fromStation.isEmpty {
             return fromCity
@@ -16,7 +19,7 @@ struct FromToView: View {
             return "\(fromCity) (\(fromStation))"
         }
     }
-
+    
     var toRoute: String {
         if toStation.isEmpty {
             return toCity
@@ -27,63 +30,79 @@ struct FromToView: View {
     
     var body: some View {
         NavigationStack(path: $path) {
-            VStack {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 12) {
-                        ForEach(1..<9) { index in
-                            StoryCardView(imageName: "\(index)StoryCard")
+            ZStack {
+                VStack {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 12) {
+                            ForEach(1..<9) { index in
+                                StoryCardView(imageName: "\(index)StoryCard")
+                            }
                         }
+                        .padding(.horizontal)
                     }
-                    .padding(.horizontal)
-                }
-                HStack {
-                    VStack(spacing: 0) {
-                        HStack {
-                            Text(fromCity.isEmpty ? "Откуда" : fromRoute)
-                                .foregroundStyle(fromCity.isEmpty ? .secondary : .primary)
-                            Spacer()
-                        }
-                        .padding()
-                        .background(.whiteDay)
-                        .onTapGesture {
-                            path.append("CitySelectFrom")
-                        }
-                        HStack {
-                            Text(toCity.isEmpty ? "Куда" : toRoute)
-                                .foregroundStyle(toCity.isEmpty ? .secondary : .primary)
-                            Spacer()
-                        }
-                        .padding()
-                        .background(.whiteDay)
-                        .onTapGesture {
-                            path.append("CitySelectTo")
-                        }
-                    }
-                    .cornerRadius(20)
-                    Button(action: swapLocations) {
-                        Image("ChangeBlueButton")
-                            .frame(width: 36, height: 36)
-                            .background(.whiteDay)
-                            .clipShape(Circle())
+                    HStack {
+                        VStack(spacing: 0) {
+                            HStack {
+                                Text(fromCity.isEmpty ? "Откуда" : fromRoute)
+                                    .foregroundStyle(fromCity.isEmpty ? .grayUniversal : .blackUniversal)
+                                Spacer()
+                            }
                             .padding()
+                            .background(.whiteUniversal)
+                            .onTapGesture { path.append("CitySelectFrom") }
+                            
+                            HStack {
+                                Text(toCity.isEmpty ? "Куда" : toRoute)
+                                    .foregroundStyle(toCity.isEmpty ? .grayUniversal : .blackUniversal)
+                                Spacer()
+                            }
+                            .padding()
+                            .background(.whiteUniversal)
+                            .onTapGesture { path.append("CitySelectTo") }
+                        }
+                        .cornerRadius(20)
+                        
+                        Button(action: swapLocations) {
+                            Image("ChangeBlueButton")
+                                .frame(width: 36, height: 36)
+                                .background(.whiteUniversal)
+                                .clipShape(Circle())
+                                .padding()
+                        }
                     }
+                    .padding()
+                    .background(.blueUniversal)
+                    .cornerRadius(20)
+                    .padding()
+                    
+                    if !fromCity.isEmpty && !toCity.isEmpty {
+                        Button("Найти", action: find)
+                            .font(.system(size: 17, weight: .semibold))
+                            .foregroundColor(.whiteUniversal)
+                            .padding(.vertical, 20)
+                            .padding(.horizontal, 60)
+                            .background(.blueUniversal)
+                            .cornerRadius(16)
+                    }
+                    
+                    Spacer()
                 }
-                .padding()
-                .background(.blueUniversal)
-                .cornerRadius(20)
-                .padding()
                 
-                if !fromCity.isEmpty && !toCity.isEmpty {
-                    Button("Найти", action: find)
-                        .font(.system(size: 17, weight: .semibold))
-                        .foregroundColor(.whiteUniversal)
-                        .padding(.vertical, 20)
-                        .padding(.horizontal, 60)
-                        .background(.blueUniversal)
-                        .cornerRadius(16)
+                if isOffline || isServerError {
+                    Color.whiteDay
+                        .edgesIgnoringSafeArea(.all)
+                        .zIndex(1)
+                    VStack {
+                        Image(isOffline ? "NoInternet" : "ServerError")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 223, height: 223)
+                            .padding()
+                        Text(isOffline ? "Нет интернета" : "Ошибка сервера")
+                            .font(.system(size: 24, weight: .bold))
+                    }
+                    .zIndex(2)
                 }
-                
-                Spacer()
             }
             .navigationDestination(for: String.self) { screen in
                 switch screen {
@@ -129,6 +148,7 @@ struct FromToView: View {
                     EmptyView()
                 }
             }
+            .background(.whiteDay)
         }
     }
     

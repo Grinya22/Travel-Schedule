@@ -5,6 +5,7 @@ struct StationSelectView: View {
     @Binding var selectedStation: String
     let selectedCity: String
     @State private var searchText = ""
+    @Environment(\.colorScheme) var colorScheme
     
     private let stations = [
         "Киевский вокзал",
@@ -27,12 +28,14 @@ struct StationSelectView: View {
         VStack {
             Label {
                 TextField("Поиск", text: $searchText)
+                    .foregroundStyle(.blackDay)
+                    .tint(.blackDay)
             } icon: {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.grayUniversal)
             }
             .padding(8)
-            .background(.lightGray)
+            .background(colorScheme == .dark ? .lightGray.opacity(0.24) : .lightGray)
             .cornerRadius(10)
             .padding(.horizontal)
             
@@ -41,6 +44,7 @@ struct StationSelectView: View {
                 Text("Станция не найдена")
                     .font(.system(size: 24, weight: .bold))
                     .multilineTextAlignment(.center)
+                    .foregroundStyle(.blackDay)
                 Spacer()
             } else {
                 ScrollView {
@@ -52,10 +56,10 @@ struct StationSelectView: View {
                             } label: {
                                 HStack {
                                     Text(station)
-                                        .foregroundStyle(.blackUniversal)
+                                        .foregroundStyle(.blackDay)
                                     Spacer()
                                     Image(systemName: "chevron.right")
-                                        .foregroundStyle(.blackUniversal)
+                                        .foregroundStyle(.blackDay)
                                 }
                                 .padding()
                             }
@@ -66,6 +70,7 @@ struct StationSelectView: View {
         }
         .navigationTitle("Выбор станции")
         .navigationBarTitleDisplayMode(.inline)
+        .background(.whiteDay)
     }
 }
 
